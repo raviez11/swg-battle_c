@@ -2,43 +2,42 @@
 #include <stdlib.h>
 #include <time.h>
 int main()
-{ srand(time(0));
-  int player ,computer =rand()%3;
+{
+  srand(time(0));
+  int player, computer = rand() % 3;
   printf("Choose 0 for Snake,1 for Water,2 for Gun \n");
-  scanf("%d",&player);
-  printf("Computer chosed %d \n",computer);
-  if(player==0 &&computer==0){
-    printf("It's a draw");
-  }
-  else if ( player==0 && computer ==1){
-    printf("You won !\n");
+  scanf("%d", &player);
+  printf("Computer chosed %d \n", computer);
+  // const int SNAKE, WATER, GUN = 0, 1, 2;
+  const int SNAKE = 0, WATER = 1, GUN = 2;
 
-  }
-   else if ( player==0 && computer ==2){
-    printf("You lose \n");
-  }
-   else if ( player==1 && computer ==0){
-    printf("You lose\n");
-  }
-   else if ( player==1 && computer ==1){
-    printf("It's draw \n");
-  }
-   else if ( player==1 && computer ==2){
-    printf("You won ! \n");
-  }
-   else if ( player==2 && computer ==0){
-    printf("You won !\n");
-  }
-   else if ( player==2 && computer ==1){
-    printf("You lose\n");
-  }
-   else if ( player==2 && computer ==2){
-    printf("It's draw");
-  }
-  else{
-    printf("Something went wrong \n");
-  }
-   
+  int MOVE_MATRIX[3][3];
 
+  // Zero out the array
+  for (int i = 0; i < 3; i++)
+  {
+    for (int j = 0; j < 3; j++)
+    {
+      MOVE_MATRIX[i][j] = 0;
+    }
+  }
+
+  // Setup the matrix
+  MOVE_MATRIX[WATER][SNAKE] = -1;
+  MOVE_MATRIX[SNAKE][WATER] = 1;
+
+  MOVE_MATRIX[GUN][WATER] = -1;
+  MOVE_MATRIX[WATER][GUN] = 1;
+
+  MOVE_MATRIX[SNAKE][GUN] = -1;
+  MOVE_MATRIX[GUN][SNAKE] = 1;
+
+  int score = MOVE_MATRIX[player][computer]; // either 0 (draw), 1 (won) or -1 (lost)
+  if (score == 0)
+    printf("It's a draw ! \n");
+  else if (score == 1)
+    printf("You won !\n");
+  else
+    printf("You lost !\n");
   return 0;
 }
